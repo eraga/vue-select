@@ -56,7 +56,7 @@
                 {{option.label}}
             </template>
         </v-select>
-        <v-select multiple placeholder="custom label template" :options="options">
+        <v-select multiple placeholder="custom label template" :options="options" @toggle-dropdown="function(val) {  }">
             <span
                     slot="selected-option-container"
                     slot-scope="props"

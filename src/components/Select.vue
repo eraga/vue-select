@@ -593,6 +593,13 @@
         }
       },
 
+      onToggleDropdown: {
+        type: Function,
+          default: function (val) {
+            this.$emit('toggle-dropdown', val)
+          }
+      },
+
       /**
        * Select the current value if selectOnTab is enabled
        */
@@ -810,6 +817,10 @@
        */
       multiple(val) {
         this.mutableValue = val ? [] : null
+      },
+
+      open(val) {
+        this.onToggleDropdown(val)
       }
     },
 
