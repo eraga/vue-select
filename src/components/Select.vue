@@ -600,6 +600,20 @@
           }
       },
 
+      overrideValues: {
+        type: Object,
+        default: function () {
+          return {
+              onValueReturned: (selected, multiple) => {
+                return selected
+             },
+             onValuePassed: (passed, multiple) => {
+               return passed
+              }
+            }
+        }
+      },
+
       /**
        * Select the current value if selectOnTab is enabled
        */
@@ -771,7 +785,7 @@
        * @return {void}
        */
       value(val) {
-        this.mutableValue = val
+        this.mutableValue = this.overrideValues.onValuePassed(val, this.multiple)
       },
 
       /**
@@ -829,7 +843,7 @@
      * attach any event listeners.
      */
     created() {
-      this.mutableValue = this.value
+      this.mutableValue = this.overrideValues.onValuePassed(this.value, this.multiple)
       this.mutableOptions = this.options.slice(0)
       this.mutableLoading = this.loading
 
@@ -864,7 +878,7 @@
           } else {
             this.mutableValue = option
           }
-          this.onInput(this.mutableValue);
+          this.onInput(this.overrideValues.onValueReturned(this.mutableValue, this.multiple));
         }
 
         this.onAfterSelect(option)
@@ -887,7 +901,7 @@
         } else {
           this.mutableValue = null
         }
-        this.onInput(this.mutableValue);
+        this.onInput(this.overrideValues.onValueReturned(this.mutableValue, this.multiple));
       },
 
       /**
@@ -896,7 +910,7 @@
        */
       clearSelection() {
         this.mutableValue = this.multiple ? [] : null
-        this.onInput(this.mutableValue)
+        this.onInput(this.overrideValues.onValueReturned(this.mutableValue, this.multiple))
       },
 
       /**

@@ -18,9 +18,27 @@ new Vue({
     options: countries,
     ajaxRes: [],
     people: [],
-    fuseSearchOptions
+    fuseSearchOptions,
+    overrideValues: {
+      onValueReturned: (innerVal, multiple) => {
+        if (innerVal === 0) {
+          return null
+        } else {
+          return innerVal
+        }
+      }, onValuePassed: (passedVal, multiple) => {
+        if (passedVal == null) {
+          return 0
+        } else {
+          return passedVal
+        }
+      }
+    }
   },
   methods: {
+    lalala(q){
+      console.log('lalala',q)
+    },
     search(search, loading) {
       loading(true);
       this.getRepositories(search, loading, this)
