@@ -857,7 +857,7 @@
             }
             option = option[this.index]
           }
-          if (this.multiple && !this.mutableValue) {
+          if (this.multiple && this.mutableValue == null) {
             this.mutableValue = [option]
           } else if (this.multiple) {
             this.mutableValue = [...this.mutableValue, option]
@@ -1179,7 +1179,7 @@
        * @return {Boolean}
        */
       isValueEmpty() {
-        if (this.mutableValue) {
+        if (this.mutableValue != null) {
           if (typeof this.mutableValue === 'object') {
             return ! Object.keys(this.mutableValue).length
           }
@@ -1194,9 +1194,9 @@
        * @return {Array}
        */
       valueAsArray() {
-        if (this.multiple && this.mutableValue) {
+        if (this.multiple && this.mutableValue != null) {
           return this.mutableValue
-        } else if (this.mutableValue) {
+        } else if (this.mutableValue != null) {
           return [].concat(this.mutableValue)
         }
 
