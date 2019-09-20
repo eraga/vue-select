@@ -314,7 +314,7 @@
   <div :dir="dir" class="dropdown v-select" :class="dropdownClasses">
     <div ref="toggle" @mousedown.prevent="toggleDropdown" class="dropdown-toggle">
 
-      <div class="vs__selected-options" ref="selectedOptions">
+      <div class="vs__selected-options" ref="selectedOptions" :title="getTitleValue">
         <slot v-for="option in valueAsArray" name="selected-option-container"
               :option="(typeof option === 'object')?option:{[label]: option}" :deselect="deselect" :multiple="multiple" :disabled="disabled">
           <span class="selected-tag" v-bind:key="option.index">
@@ -536,6 +536,11 @@
       index: {
         type: String,
         default: null
+      },
+
+      showTitle: {
+          type: Boolean,
+          default: false
       },
 
       /**
@@ -1114,6 +1119,18 @@
     },
 
     computed: {
+
+        getTitleValue() {
+
+            let selected = [];
+            if (this.multiple && this.mutableValue != null) {
+             selected = this.mutableValue
+            } else if (this.mutableValue != null) {
+                selected= [].concat(this.mutableValue)
+            }
+
+            return selected.map((s)=>this.getOptionLabel(s)).join(", ");
+        },
 
       /**
        * Classes to be output on .dropdown
